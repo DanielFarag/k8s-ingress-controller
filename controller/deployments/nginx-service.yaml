@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-entries-daniel-iti-com-type-service
+spec:
+  type: NodePort
+  selector:
+    app: ingress-entries-daniel-iti-com-type-pods
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30001

@@ -1,0 +1,17 @@
+apiVersion: daniel.iti.com/v1
+kind: IngressEntry
+metadata:
+  name: ingress-entry-1
+spec:
+  path: /nginx1
+  service: nginx-service1
+  port: 80
+---
+apiVersion: daniel.iti.com/v1
+kind: IngressEntry
+metadata:
+  name: ingress-entry-2
+spec:
+  path: /nginx2
+  service: nginx-service2
+  port: 81
