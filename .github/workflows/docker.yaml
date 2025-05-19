@@ -20,10 +20,7 @@ jobs:
           password: ${{ secrets.AUTH_TOKEN }}
 
       - name: Build controller image with multiple tags
-        run: |
-          docker build -t ghcr.io/danielfarag/k8s-ingress-controller:${{ github.sha }} -t ghcr.io/danielfarag/k8s-ingress-controller:latest ./controller
+        run: docker build  -t ghcr.io/danielfarag/k8s-ingress-controller:latest ./controller
 
-      - name: Push controller image (sha and latest)
-        run: |
-          docker push ghcr.io/danielfarag/k8s-ingress-controller:${{ github.sha }}
-          docker push ghcr.io/danielfarag/k8s-ingress-controller:latest
+      - name: Push controller image
+        run: docker push ghcr.io/danielfarag/k8s-ingress-controller:latest
