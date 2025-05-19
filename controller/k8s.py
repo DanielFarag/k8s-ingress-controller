@@ -102,12 +102,11 @@ class K8S:
         with open(depyloment) as f:
             dep = yaml.safe_load(f)
 
-        dep += dep.format(hash=int(time.time()))
-
         api = client.AppsV1Api()
 
         namespace = dep.get('metadata', {}).get('namespace', 'default')
         name = dep['metadata']['name']
+        dep['spec']['template']['metadata']['labels']['version'] = f"ingress-entries-daniel-iti-com-type-nginx-{int(time.time())}"
 
 
         try:
