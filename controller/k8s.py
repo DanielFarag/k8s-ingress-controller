@@ -6,7 +6,7 @@ import yaml
 
 class K8S:
     def __init__(self):
-        config.load_kube_config()
+        config.load_incluster_config()
 
     def createCrd(self):
         try:
