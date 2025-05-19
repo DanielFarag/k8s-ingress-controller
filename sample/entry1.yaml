@@ -1,0 +1,8 @@
+apiVersion: daniel.iti.com/v1
+kind: IngressEntry
+metadata:
+  name: ingress-entry-1
+spec:
+  path: /apache
+  service: apache-service
+  port: 80

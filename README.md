@@ -5,6 +5,101 @@
 ## 🧩 Project Structure
 
 ### Example Ingress Entries:
+#### Setup Controller
+```sh
+kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/controller.yaml
+```
+#### Test Services
+```sh
+kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/services.yaml
+```
+> This will create 2 services [ apache and caddy ] .
+
+##### 1- Apache Service
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd
+spec:
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+      - name: httpd
+        image: httpd:alpine
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-service
+spec:
+  selector:
+    app: httpd
+  ports:
+  - port: 80
+    targetPort: 80
+```
+##### 2- Caddy Service
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caddy
+spec:
+  selector:
+    matchLabels:
+      app: caddy
+  template:
+    metadata:
+      labels:
+        app: caddy
+    spec:
+      containers:
+      - name: caddy
+        image: caddy:latest
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: caddy-service
+spec:
+  selector:
+    app: caddy
+  ports:
+  - port: 81
+    targetPort: 80
+```
+
+##### 3- Create 2 entries
+```sh
+kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/entry1.yaml
+kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/entry2.yaml
+```
+> This will create 2 entries for the previously created services [ apache and caddy ] .
 
 ```yaml
 apiVersion: daniel.iti.com/v1
@@ -12,13 +107,13 @@ kind: IngressEntry
 metadata:
   name: ingress-entry-1
 spec:
-  path: /nginx1
-  service: nginx-service1
+  path: /apache
+  service: apache-service
   port: 80
 ```
 ---
 
-### 3. Controller
+### Controller
 
 A Python script (`main.py`) handles:
 
@@ -35,7 +130,7 @@ A Python script (`main.py`) handles:
 
 ---
 
-### 4. NGINX Deployment
+### NGINX Deployment
 
 An NGINX container is deployed with:
 
@@ -46,7 +141,7 @@ An NGINX container is deployed with:
 
 ## 🔧 Future Improvements
 
-* Add support for host-based routing
-* Enable HTTPS with Let's Encrypt
-* Validate services before writing config
-* Auto-reload NGINX config without pod restart
+* [ ] Add support for host-based routing
+* [ ] Enable HTTPS with Let's Encrypt
+* [ ] Validate services before writing config
+* [x] Auto-reload NGINX config without pod restart

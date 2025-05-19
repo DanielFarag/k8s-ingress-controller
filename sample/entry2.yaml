@@ -1,0 +1,8 @@
+apiVersion: daniel.iti.com/v1
+kind: IngressEntry
+metadata:
+  name: ingress-entry-2
+spec:
+  path: /caddy
+  service: caddy-service
+  port: 81
