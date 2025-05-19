@@ -105,13 +105,19 @@ class K8S:
         namespace = dep.get('metadata', {}).get('namespace', 'default')
         name = dep['metadata']['name']
 
+
         try:
-            api.delete_namespaced_deployment(name=name, namespace=namespace)
+            existing_deployment = api.read_namespaced_deployment(name=name, namespace=namespace)
 
-        except client.exceptions.ApiException as e:
-            pass
+            depyloment['metadata']['resourceVersion'] = existing_deployment.metadata.resource_version
 
-        api.create_namespaced_deployment(namespace=namespace, body=dep)
+            api.replace_namespaced_deployment(name=name, namespace=namespace, body=depyloment)
+        except ApiException as e:
+            if e.status == 404:
+                api.create_namespaced_deployment(namespace=namespace, body=depyloment)
+            else:
+                print(e)
+                raise 
         print(f"Deployment '{name}' created")
 
     def nginxService(self):
