@@ -119,19 +119,23 @@ class K8S:
 
     def nginxService(self):
         
-        depyloment=path.join(path.dirname(__file__), "deployments/nginx-service.yaml")
+        service=path.join(path.dirname(__file__), "deployments/nginx-service.yaml")
 
-        with open(depyloment) as f:
-            dep = yaml.safe_load(f)
+        with open(service) as f:
+            svc = yaml.safe_load(f)
 
         api = client.CoreV1Api()
 
-        namespace = dep.get('metadata', {}).get('namespace', 'default')
-        name = dep['metadata']['name']
+        namespace = svc.get('metadata', {}).get('namespace', 'default')
+        name = svc['metadata']['name']
 
         try:
-            api.delete_namespaced_service(name=name, namespace=namespace)
-        except client.exceptions.ApiException as e:
-            pass
-        api.create_namespaced_service(namespace=namespace, body=dep)
+            api.replace_namespaced_service(name=name, namespace=namespace, body=svc)
+        except ApiException as e:
+            if e.status == 404:
+                api.create_namespaced_service(namespace=namespace, body=svc)
+            else:
+                print(e)
+                raise 
+
         print(f"Service '{name}' created")
