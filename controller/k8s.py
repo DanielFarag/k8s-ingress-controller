@@ -107,10 +107,6 @@ class K8S:
 
 
         try:
-            existing_deployment = api.read_namespaced_deployment(name=name, namespace=namespace)
-
-            dep['metadata']['resourceVersion'] = existing_deployment.metadata.resource_version
-
             api.replace_namespaced_deployment(name=name, namespace=namespace, body=dep)
         except ApiException as e:
             if e.status == 404:
@@ -118,7 +114,7 @@ class K8S:
             else:
                 print(e)
                 raise 
-        api.create_namespaced_deployment(namespace=namespace, body=dep)
+
         print(f"Deployment '{name}' created")
 
     def nginxService(self):
