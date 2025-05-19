@@ -2,14 +2,13 @@
 
 > It is a simplified reimplementation of an Ingress controller using Kubernetes Custom Resource Definitions (CRDs) and NGINX to help understand controller design patterns, custom resource handling, and dynamic configuration in Kubernetes.
 
-## 🧩 Project Structure
+## 🧩 Example Ingress Entries
 
-### Example Ingress Entries:
 #### Setup Controller
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/controller.yaml
 ```
-#### Test Services
+#### Create Custom Services
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/services.yaml
 ```
@@ -110,6 +109,16 @@ spec:
   path: /apache
   service: apache-service
   port: 80
+```
+```yaml
+apiVersion: daniel.iti.com/v1
+kind: IngressEntry
+metadata:
+  name: ingress-entry-2
+spec:
+  path: /caddy
+  service: caddy-service
+  port: 81
 ```
 ---
 
