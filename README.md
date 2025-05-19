@@ -121,7 +121,12 @@ spec:
   port: 81
 ```
 ---
-
+### Test
+```yaml
+curl http://<node_ip>:30001/
+curl http://<node_ip>:30001/apache
+curl http://<node_ip>:30001/caddy
+```
 ### Controller
 
 A Python script (`main.py`) handles:
@@ -150,7 +155,8 @@ An NGINX container is deployed with:
 
 ## 🔧 Future Improvements
 
+* [x] Auto-reload NGINX config without pod restart
+* [ ] Persistent Entry-State Among Pod Destroy [ sqlite ]
 * [ ] Add support for host-based routing
 * [ ] Enable HTTPS with Let's Encrypt
 * [ ] Validate services before writing config
-* [x] Auto-reload NGINX config without pod restart
