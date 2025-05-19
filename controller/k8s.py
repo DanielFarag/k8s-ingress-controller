@@ -3,6 +3,8 @@ from kubernetes import client, config, watch
 from kubernetes.client.rest import ApiException
 from os import path
 import yaml
+import time
+
 
 class K8S:
     def __init__(self):
@@ -25,7 +27,7 @@ class K8S:
                     else:
                         print(f"Failed to create CRD: {e}")
                         raise
-        except Exception as e:
+        except ApiException as e:
             print(f"CRD creation error: {e}")
             return []
 
@@ -86,7 +88,7 @@ class K8S:
         print(nginx_conf_content)
         try:
             v1.replace_namespaced_config_map("nginx-config", "default", config_map)
-        except client.exceptions.ApiException:
+        except ApiException:
             v1.create_namespaced_config_map("default", config_map)
 
             
@@ -99,6 +101,8 @@ class K8S:
 
         with open(depyloment) as f:
             dep = yaml.safe_load(f)
+
+        dep += dep.format(hash=int(time.time()))
 
         api = client.AppsV1Api()
 

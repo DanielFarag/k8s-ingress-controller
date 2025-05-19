@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service1
+  name: apache-service
 spec:
   selector:
     app: httpd
@@ -38,19 +38,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx2
+  name: caddy
 spec:
   selector:
     matchLabels:
-      app: nginx2
+      app: caddy
   template:
     metadata:
       labels:
-        app: nginx2
+        app: caddy
     spec:
       containers:
-      - name: nginx2
-        image: nginx:alpine
+      - name: caddy
+        image: caddy:latest
         resources:
           requests:
             memory: "128Mi"
@@ -64,10 +64,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service2
+  name: caddy-service
 spec:
   selector:
-    app: nginx2
+    app: caddy
   ports:
   - port: 81
     targetPort: 80

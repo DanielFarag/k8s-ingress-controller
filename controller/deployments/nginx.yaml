@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: ingress-entries-daniel-iti-com-type-pods
+        version: ingress-entries-daniel-iti-com-type-nginx-{hash}
     spec:
       containers:
         - name: nginx
