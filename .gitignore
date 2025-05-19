@@ -2,4 +2,3 @@
 *kubeconfig.yaml
 *.sqlite
 secert-github.yaml
-controller.yaml

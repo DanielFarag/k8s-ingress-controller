@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-controller
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: nginx-controller-clusterrole
+  namespace: default
+rules:
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses", "ingresses/status"]
+  verbs: ["get", "list", "watch", "update", "patch"]
+- apiGroups: [""]
+  resources: ["services", "endpoints", "secrets"]
+  verbs: ["get", "list", "watch", "update", "patch", "create"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch", "update", "patch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["daniel.iti.com"]
+  resources: ["ingress-entries"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "update", "patch", "create"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: nginx-controller-ClusterRoleBinding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: nginx-controller
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: nginx-controller-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-controller
+  labels:
+    name: nginx-controller
+spec:
+  serviceAccountName: nginx-controller
+  containers:
+  - name: nginx-controller
+    image: ghcr.io/danielfarag/k8s-ingress-controller:latest
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "500m"
