@@ -8,7 +8,7 @@
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/controller.yaml
 ```
-#### Create Custom Services
+#### Create Custom Services [ For testing purposes - Routing ]
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/services.yaml
 ```
