@@ -2,7 +2,7 @@
 
 > It is a simplified reimplementation of an Ingress controller using Kubernetes Custom Resource Definitions (CRDs) and NGINX to help understand controller design patterns, custom resource handling, and dynamic configuration in Kubernetes.
 
-## 🧩 Example Ingress Entries (Video)[https://drive.google.com/file/d/19K6KkyKzE3hoDjCANKVVROHx3r3wz-t7/view?usp=sharing]
+## 🧩 Example Ingress Entries [Video](https://drive.google.com/file/d/19K6KkyKzE3hoDjCANKVVROHx3r3wz-t7/view?usp=sharing)
 
 #### Setup Controller
 ```sh
