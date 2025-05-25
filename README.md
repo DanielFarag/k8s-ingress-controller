@@ -2,8 +2,8 @@
 
 > It is a simplified reimplementation of an Ingress controller using Kubernetes Custom Resource Definitions (CRDs) and NGINX to help understand controller design patterns, custom resource handling, and dynamic configuration in Kubernetes.
 
-## 🧩 Example Ingress Entries
-<video controls src="video/output.mp4" title="Title"></video>
+## 🧩 Example Ingress Entries (Video)[https://drive.google.com/file/d/19K6KkyKzE3hoDjCANKVVROHx3r3wz-t7/view?usp=sharing]
+
 #### Setup Controller
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/controller.yaml
