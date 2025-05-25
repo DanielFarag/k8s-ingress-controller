@@ -3,7 +3,7 @@
 > It is a simplified reimplementation of an Ingress controller using Kubernetes Custom Resource Definitions (CRDs) and NGINX to help understand controller design patterns, custom resource handling, and dynamic configuration in Kubernetes.
 
 ## 🧩 Example Ingress Entries
-
+<video controls src="video/output.mp4" title="Title"></video>
 #### Setup Controller
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/DanielFarag/k8s-ingress-controller/main/sample/controller.yaml
@@ -155,8 +155,6 @@ An NGINX container is deployed with:
 
 ## 🔧 Future Improvements
 
-* [x] Auto-reload NGINX config without pod restart
-* [ ] Persistent Entry-State Among Pod Destroy [ sqlite ]
+* [x] Auto-reload NGINX config
 * [ ] Add support for host-based routing
 * [ ] Enable HTTPS with Let's Encrypt
-* [ ] Validate services before writing config
